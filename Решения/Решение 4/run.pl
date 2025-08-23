@@ -2,18 +2,24 @@ use strict;
 use warnings;
 use DBI;
 
-my $sth_sel = DBI->connect(@::ENV{+qw{DB_DSN DB_USER DB_PASSWD}})->prepare(<< '.');
+my $dbh = DBI->connect(@::ENV{+qw{DB_DSN DB_USER DB_PASSWD}});
+my ($size, $offset) = (1000, 0);
+
+do {
+	my $sth_sel = $dbh->prepare(<< ".");
 SELECT
 	`t1`.`id`
 	, `t1`.`data`
 FROM
-	`test` AS `t1`;
+	`test` AS `t1`
+LIMIT $size OFFSET $offset;
 .
-$sth_sel->execute;
+	$sth_sel->execute;
 
-undef while $sth_sel->fetchrow_array;
+	last + ( ) unless $sth_sel->rows;
 
-$sth_sel->finish;
+	undef while $sth_sel->fetchrow_array;
 
-__END__
-Connection timeout
+	$sth_sel->finish;
+	$offset += $size;
+} until undef

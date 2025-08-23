@@ -49,7 +49,7 @@ sub getArgs($) {
 		}
 	}
 
-	+ (\@result, int($max * rand))
+	+ (\@result, int $max * rand)
 }
 
 use Benchmark qw(:all);
