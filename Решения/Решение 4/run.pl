@@ -16,7 +16,7 @@ LIMIT $size OFFSET $offset;
 .
 	$sth_sel->execute;
 
-	last + ( ) unless $sth_sel->rows;
+	last + ( ) unless $sth_sel->rows > 0;
 
 	undef while $sth_sel->fetchrow_array;
 
