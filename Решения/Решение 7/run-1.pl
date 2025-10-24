@@ -1,14 +1,6 @@
 use IO::Socket::INET;
 
-sub http_encode(@) {
-	map {
-		my $str = $_;
-
-		s{\W}{+ sprintf '%02X', ord $&}ugeosx;
-
-		$str
-	} @_
-}
+sub http_encode(@) { + map s{\W}{+ sprintf '%02X', ord $&}ugeosxp, @_ }
 
 sub http_get($;$$$$) {
 	my $host = shift;
