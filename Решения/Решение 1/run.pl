@@ -1,7 +1,6 @@
 use strict;
 use warnings;
 use Data::Dumper;
-use Digest::SHA1 qw{sha1_hex};
 
 sub getRemoveDuplicates($) {
 	my ($hash) = @_;
@@ -9,12 +8,12 @@ sub getRemoveDuplicates($) {
 
 	reset %$hash;
 
-	while (my($key, $value) = each %$hash) {
-		my $key2 = &sha1_hex($value);
-
-		delete $hash->{$key} if exists $keys{$key2};
-
-		$keys{$key2} = undef
+	while (my($key, $key2) = each %$hash) {
+		if (exists $keys{$key2}) {
+			delete $hash->{$key}
+		} else {
+			$keys{$key2} = undef
+		}
 	}
 
 	$hash
