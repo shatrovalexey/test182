@@ -19,6 +19,6 @@ sub getRemoveDuplicates($) {
 	$hash
 }
 
-my %h = qw{x x d f x d y x};
+my %h = qw{x x d f e d y x};
 
 print Dumper getRemoveDuplicates \%h
